@@ -1,0 +1,143 @@
+.k-hero {
+    position: relative;
+    padding: 160px 0 100px;
+    overflow: hidden;
+}
+
+.k-hero__glow {
+    position: absolute;
+    top: -250px;
+    right: -250px;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(229, 179, 122, 0.18), transparent 65%);
+    filter: blur(50px);
+    pointer-events: none;
+}
+
+.k-hero__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+}
+
+.k-hero__badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 40px;
+    background: transparent;
+    color: var(--cream-soft);
+    border: 1px solid var(--line-strong);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+}
+
+.k-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 76px);
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+
+.k-hero__title span {
+    color: var(--gold);
+    font-style: italic;
+}
+
+.k-hero__desc {
+    color: var(--muted);
+    font-size: 17px;
+    font-weight: 300;
+    margin-top: 24px;
+    max-width: 520px;
+    letter-spacing: 0.02em;
+}
+
+.k-hero__actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+}
+
+.k-hero__meta {
+    display: flex;
+    gap: 28px;
+    margin-top: 40px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    flex-wrap: wrap;
+}
+
+.k-hero__meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.k-hero__art {
+    position: relative;
+    height: 400px;
+    display: grid;
+    place-items: center;
+}
+
+.k-hero__circle {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(229, 179, 122, 0.25), rgba(94, 36, 18, 0.6));
+    filter: blur(20px);
+    animation: k-pulse 5s ease-in-out infinite;
+}
+
+.k-hero__emoji {
+    font-size: 190px;
+    position: relative;
+    filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.4));
+}
+
+@keyframes k-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@media (max-width: 860px) {
+    .k-hero {
+        padding: 130px 0 60px;
+    }
+
+    .k-hero__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .k-hero__art {
+        height: 260px;
+        display: none;
+    }
+
+    .k-hero__emoji {
+        font-size: 130px;
+    }
+
+    .k-hero__circle {
+        width: 230px;
+        height: 230px;
+    }
+}

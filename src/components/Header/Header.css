@@ -1,0 +1,278 @@
+/* ==================== HEADER ==================== */
+.k-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 18px 0;
+    transition: all 0.35s ease;
+}
+
+.k-header.is-scrolled {
+    background: rgba(94, 36, 18, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+}
+
+/* Когда открыто мобильное меню — фон шапки прозрачный,
+   чтобы не спорил с панелью, но z-index выше меню */
+.k-header.is-open {
+    z-index: 60;
+}
+
+.k-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* ==================== LOGO ==================== */
+.k-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.k-logo__mark {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    background: transparent;
+    border: 1px solid var(--cream);
+    display: grid;
+    place-items: center;
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.k-logo:hover .k-logo__mark {
+    transform: scale(1.06);
+    border-color: var(--gold);
+}
+
+.k-logo__mark--text {
+    background: transparent;
+}
+
+/* ==================== NAV ==================== */
+.k-nav {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.k-nav__link {
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    transition: opacity 0.25s, color 0.25s;
+    position: relative;
+}
+
+.k-nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.k-nav__link:hover {
+    opacity: 1;
+    color: var(--cream);
+}
+
+.k-nav__link:hover::after {
+    transform: scaleX(1);
+}
+
+.k-nav__socials {
+    display: none;
+    gap: 16px;
+    font-size: 20px;
+}
+
+.k-nav__socials a {
+    color: var(--cream);
+    opacity: 0.8;
+    transition: opacity 0.25s, color 0.25s;
+}
+
+.k-nav__socials a:hover {
+    opacity: 1;
+    color: var(--gold);
+}
+
+/* ==================== RIGHT ==================== */
+.k-header__right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.k-phone {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 40px;
+    background: transparent;
+    color: var(--cream);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    border: 1px solid var(--line-strong);
+    transition: all 0.25s ease;
+}
+
+.k-phone:hover {
+    background: rgba(245, 233, 220, 0.08);
+    border-color: var(--cream);
+}
+
+/* ==================== BURGER ==================== */
+.k-burger {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--cream);
+    padding: 0;
+    position: relative;
+    z-index: 60;
+    place-items: center;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.k-burger:hover {
+    background: rgba(245, 233, 220, 0.08);
+    border-color: var(--cream);
+}
+
+.k-burger:active {
+    transform: scale(0.94);
+}
+
+/* Две иконки — Menu и X — наложены друг на друга */
+.k-burger__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 22px;
+    line-height: 1;
+    transition: opacity 0.25s ease, transform 0.35s ease;
+    transform-origin: center;
+}
+
+.k-burger__icon--menu {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    opacity: 1;
+}
+
+.k-burger__icon--close {
+    transform: translate(-50%, -50%) rotate(-90deg) scale(0.5);
+    opacity: 0;
+}
+
+.k-burger.is-open .k-burger__icon--menu {
+    transform: translate(-50%, -50%) rotate(90deg) scale(0.5);
+    opacity: 0;
+}
+
+.k-burger.is-open .k-burger__icon--close {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    opacity: 1;
+}
+
+/* ==================== MOBILE MENU ==================== */
+@media (max-width: 860px) {
+    .k-nav {
+        position: fixed;
+        inset: 0 0 0 auto;
+        width: 78%;
+        max-width: 320px;
+        background: var(--bg-dark);
+        flex-direction: column;
+        justify-content: center;
+        transform: translateX(100%);
+        transition: transform 0.35s ease;
+        gap: 28px;
+        font-size: 18px;
+        border-left: 1px solid var(--line);
+        z-index: 55;
+        box-shadow: -20px 0 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .k-nav.is-open {
+        transform: translateX(0);
+    }
+
+    /* Затемнение фона при открытом меню */
+    .k-header.is-open::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 10, 13, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 54;
+        animation: k-fade-in 0.3s ease;
+    }
+
+    .k-nav__socials {
+        display: flex;
+    }
+
+    .k-burger {
+        display: grid;
+    }
+
+    .k-phone {
+        display: none;
+    }
+}
+
+@keyframes k-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Уважаем настройки пользователя */
+@media (prefers-reduced-motion: reduce) {
+
+    .k-header,
+    .k-nav,
+    .k-burger__icon,
+    .k-header.is-open::before {
+        transition: none;
+        animation: none;
+    }
+}

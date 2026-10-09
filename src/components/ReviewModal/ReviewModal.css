@@ -1,0 +1,66 @@
+/* ==================== REVIEW MODAL ==================== */
+.k-modal--review {
+    max-width: 500px;
+}
+
+.k-review__subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    line-height: 1.55;
+    margin: -12px 0 22px;
+}
+
+/* Звёзды */
+.k-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 4px;
+}
+
+.k-rating__star {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    font-size: 26px;
+    color: var(--cream-muted);
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.k-rating__star:hover {
+    transform: scale(1.15);
+}
+
+.k-rating__star.is-active {
+    color: var(--gold);
+}
+
+.k-rating__star.is-active svg {
+    fill: var(--gold);
+}
+
+.k-rating__label {
+    margin-left: 8px;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream-muted);
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+    .k-rating__star {
+        width: 36px;
+        height: 36px;
+        font-size: 22px;
+    }
+
+    .k-rating__label {
+        font-size: 11px;
+    }
+}
