@@ -7,6 +7,7 @@ export default function OrderModal({
     cart,
     addToCart,
     removeFromCart,
+    clearCart,
     totalPrice,
     formatPrice,
     onClose,
@@ -39,7 +40,6 @@ export default function OrderModal({
                 const { latitude, longitude } = pos.coords;
                 setCoords({ lat: latitude, lng: longitude });
                 setGeoStatus('ok');
-                // Опционально: подсказываем пользователю, что точка добавлена
             },
             (err) => {
                 setGeoStatus('error');
@@ -82,7 +82,8 @@ export default function OrderModal({
                     phone,
                     address,
                     comment,
-                    coords, // ← отправляем координаты
+                    lat: coords?.lat ?? null,
+                    lng: coords?.lng ?? null,
                     items: items.map(({ item, qty }) => ({
                         name: item.name,
                         price: item.price,
@@ -93,7 +94,15 @@ export default function OrderModal({
             });
             const data = await res.json();
             if (!res.ok || !data.ok) throw new Error(data.error || 'Ошибка отправки');
+
             setDone(true);
+
+            // 🧹 Очищаем корзину после успешного заказа
+            if (typeof clearCart === 'function') {
+                clearCart();
+            } else {
+                console.warn('⚠ clearCart не передан в OrderModal');
+            }
         } catch (err) {
             setError(err.message);
         } finally {
@@ -139,11 +148,19 @@ export default function OrderModal({
                                     </div>
 
                                     <div className="k-qty">
-                                        <button onClick={() => removeFromCart(item.id)} aria-label="Меньше">
+                                        <button
+                                            type="button"
+                                            onClick={() => removeFromCart(item.id)}
+                                            aria-label="Меньше"
+                                        >
                                             <FiMinus />
                                         </button>
                                         <span>{qty}</span>
-                                        <button onClick={() => addToCart(item)} aria-label="Больше">
+                                        <button
+                                            type="button"
+                                            onClick={() => addToCart(item)}
+                                            aria-label="Больше"
+                                        >
                                             <FiPlus />
                                         </button>
                                     </div>

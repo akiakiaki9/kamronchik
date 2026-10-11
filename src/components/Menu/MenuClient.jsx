@@ -151,7 +151,7 @@ export default function MenuClient({ categories = [] }) {
                     <span className="k-menu__kicker">Наше меню</span>
                     <h2 className="k-menu__title">Выберите и закажите онлайн</h2>
                     <p className="k-menu__subtitle">
-                        Заказ придёт напрямую в наш Telegram — мы свяжемся с вами для подтверждения.
+                        Мы свяжемся с вами для подтверждения.
                     </p>
                 </div>
 

@@ -74,8 +74,22 @@ export default function Footer() {
                 </div>
 
                 <div className="k-footer__bottom">
-                    <span>© {new Date().getFullYear()} Kamronchik Café</span>
+                    <span>© 2026 Kamronchik Café</span>
                     <span>Доставка по Бухаре · 9:30 – 00:00</span>
+                </div>
+
+                {/* Разработчик */}
+                <div className="k-footer__dev">
+                    <span>
+                        Разработал{' '}
+                        <a
+                            href="https://www.akbarsoft.uz"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Akbar Soft
+                        </a>
+                    </span>
                 </div>
             </div>
         </footer>

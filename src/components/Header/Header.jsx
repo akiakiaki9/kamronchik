@@ -5,7 +5,7 @@ import { FaInstagram, FaTelegramPlane } from 'react-icons/fa';
 import './Header.css';
 
 const links = [
-    { href: '#menu', label: 'Меню' },
+    { href: 'menu', label: 'Меню' },
     { href: '#about', label: 'О нас' },
     { href: '#contacts', label: 'Контакты' },
 ];
@@ -40,7 +40,7 @@ export default function Header() {
     return (
         <header className={`k-header ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
             <div className="k-container k-header__inner">
-                <a href="#" className="k-logo" aria-label="Kamronchik — на главную" onClick={() => setOpen(false)}>
+                <a href="/" className="k-logo" aria-label="Kamronchik — на главную" onClick={() => setOpen(false)}>
                     <img
                         src="/images/logo.png"
                         alt="Kamronchik"
