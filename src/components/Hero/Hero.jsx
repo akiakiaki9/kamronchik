@@ -4,8 +4,8 @@ import { FiClock, FiMapPin, FiArrowRight } from 'react-icons/fi';
 import './Hero.css';
 
 const BG_IMAGES = [
-    '/images/interior-1.jpg',
-    '/images/interior-2.jpg',
+    '/images/interior-1.JPG',
+    '/images/interior-2.JPG',
 ];
 
 export default function Hero() {

@@ -19,11 +19,11 @@ const YANDEX_MAP_LINK = 'https://yandex.uz/maps/-/CXqcF21S';
 // 📸 Вертикальные фото кафе / десертов
 const GALLERY = [
     {
-        src: '/images/interior-1.jpg',
+        src: '/images/interior-1.JPG',
         alt: 'Клубника в шоколаде — Kamronchik',
     },
     {
-        src: '/images/interior-2.jpg',
+        src: '/images/interior-2.JPG',
         alt: 'Десерты и напитки — Kamronchik',
     },
 ];
