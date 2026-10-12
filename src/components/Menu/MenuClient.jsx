@@ -9,7 +9,7 @@ const PLACEHOLDER = '/images/placeholder.svg';
 const CART_KEY = 'kamronchik_cart_v1';
 const DRAG_THRESHOLD = 10;
 
-export default function MenuClient({ categories = [] }) {
+export default function MenuClient({ categories = [], withHead = true }) {
     const [cart, setCart] = useState({});
     const [openOrder, setOpenOrder] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -141,19 +141,20 @@ export default function MenuClient({ categories = [] }) {
     const totalPrice = Object.values(cart).reduce((s, v) => s + v.qty * v.item.price, 0);
     const formatPrice = (n) => n.toLocaleString('ru-RU') + ' сум';
 
-    // ====== Видимая категория ======
     const currentCategory = categories.find((c) => c.id === activeCat) || categories[0];
 
     return (
-        <section id="menu" className="k-menu">
+        <section className="k-menu">
             <div className="k-container">
-                <div className="k-menu__head">
-                    <span className="k-menu__kicker">Наше меню</span>
-                    <h2 className="k-menu__title">Выберите и закажите онлайн</h2>
-                    <p className="k-menu__subtitle">
-                        Мы свяжемся с вами для подтверждения.
-                    </p>
-                </div>
+                {withHead && (
+                    <div className="k-menu__head">
+                        <span className="k-menu__kicker">Наше меню</span>
+                        <h2 className="k-menu__title">Выберите и закажите онлайн</h2>
+                        <p className="k-menu__subtitle">
+                            Мы свяжемся с вами для подтверждения.
+                        </p>
+                    </div>
+                )}
 
                 {categories.length === 0 ? (
                     <div className="k-menu__empty">
@@ -195,7 +196,6 @@ export default function MenuClient({ categories = [] }) {
                                         className={`k-chip ${activeCat === cat.id ? 'is-active' : ''}`}
                                         onClick={() => selectCategory(cat.id)}
                                     >
-                                        <span className="k-chip__icon">{cat.icon}</span>
                                         <span className="k-chip__label">{cat.name}</span>
                                         <span className="k-chip__count">{cat.items.length}</span>
                                     </button>
@@ -216,7 +216,6 @@ export default function MenuClient({ categories = [] }) {
                         {currentCategory && (
                             <div className="k-category">
                                 <h3 className="k-category__title">
-                                    <span className="k-category__icon">{currentCategory.icon}</span>
                                     {currentCategory.name}
                                 </h3>
                                 <div className="k-grid">

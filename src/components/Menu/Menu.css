@@ -122,7 +122,7 @@
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     padding: 10px 18px;
     border-radius: 40px;
     background: var(--card);
@@ -154,11 +154,6 @@
     color: var(--cream);
 }
 
-.k-chip__icon {
-    font-size: 16px;
-    line-height: 1;
-}
-
 .k-chip__label {
     font-weight: 500;
 }
@@ -183,9 +178,6 @@
 }
 
 .k-category__title {
-    display: flex;
-    align-items: center;
-    gap: 14px;
     font-family: var(--font-display);
     font-size: 28px;
     font-weight: 500;
@@ -196,18 +188,7 @@
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.k-category__icon {
-    width: 48px;
-    height: 48px;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: transparent;
-    border: 1px solid var(--line-strong);
-    font-size: 22px;
-    flex-shrink: 0;
+    text-align: left;
 }
 
 /* ==================== GRID ==================== */
@@ -507,7 +488,6 @@
 
 /* ==================== RESPONSIVE ==================== */
 
-/* Ноутбуки и небольшие десктопы — 2 колонки */
 @media (max-width: 1100px) {
     .k-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -515,7 +495,6 @@
     }
 }
 
-/* Планшеты */
 @media (max-width: 860px) {
     .k-menu {
         padding: 60px 0 120px;
@@ -531,13 +510,6 @@
 
     .k-category__title {
         font-size: 24px;
-        gap: 12px;
-    }
-
-    .k-category__icon {
-        width: 42px;
-        height: 42px;
-        font-size: 20px;
     }
 
     .k-grid {
@@ -560,7 +532,6 @@
     }
 }
 
-/* Мобильные — компактные 2 колонки */
 @media (max-width: 600px) {
     .k-menu {
         padding: 48px 0 100px;
@@ -596,11 +567,7 @@
     .k-chip {
         padding: 8px 14px;
         font-size: 12px;
-        gap: 6px;
-    }
-
-    .k-chip__icon {
-        font-size: 14px;
+        gap: 8px;
     }
 
     .k-chip__count {
@@ -674,15 +641,8 @@
 
     .k-category__title {
         font-size: 20px;
-        gap: 10px;
         margin-bottom: 18px;
         padding-bottom: 12px;
-    }
-
-    .k-category__icon {
-        width: 36px;
-        height: 36px;
-        font-size: 17px;
     }
 
     .k-category {
