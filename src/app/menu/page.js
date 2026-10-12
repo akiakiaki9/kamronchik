@@ -7,7 +7,7 @@ import './menu-page.css';
 const SITE_URL = 'https://www.kamronchik.uz';
 
 export const metadata = {
-    title: 'Клубника в шоколаде, десерты, напитки',
+    title: 'Меню — Клубника в шоколаде, десерты, напитки',
     description:
         'Полное меню Kamronchik: клубника в шоколаде, десерты, кофе и напитки. Цены, состав, фото. Заказать с доставкой по Бухаре.',
     alternates: {
@@ -38,7 +38,19 @@ export default async function MenuPage() {
             <Header />
             <main className="k-menu-page">
                 <section className="k-page-hero">
-                    <div className="k-container">
+                    {/* 🖼 Фоновое фото */}
+                    <div className="k-page-hero__bg" aria-hidden="true">
+                        <img
+                            src="/images/interior-1.JPG"
+                            alt=""
+                            loading="eager"
+                            decoding="async"
+                        />
+                        <div className="k-page-hero__overlay" />
+                    </div>
+
+                    {/* 📝 Текст поверх фото */}
+                    <div className="k-container k-page-hero__content">
                         <span className="k-page-hero__kicker">Kamronchik</span>
                         <h1 className="k-page-hero__title">Наше меню</h1>
                         <p className="k-page-hero__subtitle">
