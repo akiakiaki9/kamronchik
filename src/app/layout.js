@@ -46,7 +46,7 @@ export const metadata = {
       'Клубника в шоколаде, десерты и напитки ручной работы. Доставка по всей Бухаре с 9:30 до 00:00.',
     images: [
       {
-        url: '/images/og-cover.jpg',
+        url: '/images/logo.png',
         width: 1200,
         height: 630,
         alt: 'Kamronchik — Café & Chocoberry',
@@ -60,7 +60,7 @@ export const metadata = {
     title: 'Kamronchik — Клубника в шоколаде и десерты',
     description:
       'Доставка по всей Бухаре с 9:30 до 00:00. Заказать онлайн.',
-    images: ['/images/og-cover.jpg'],
+    images: ['/images/logo.png'],
   },
 
   // Иконки
@@ -72,9 +72,6 @@ export const metadata = {
     ],
     apple: '/images/apple-touch-icon.png',
   },
-
-  // PWA manifest
-  manifest: '/manifest.webmanifest',
 
   // Robots
   robots: {
