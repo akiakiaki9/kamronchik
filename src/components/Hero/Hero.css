@@ -1,7 +1,16 @@
+/* ==================== HERO ==================== */
 .k-hero {
     position: relative;
-    padding: 160px 0 100px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 160px 0 60px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.k-hero__bg {
+    display: none;
 }
 
 .k-hero__glow {
@@ -22,6 +31,12 @@
     gap: 40px;
     align-items: center;
     position: relative;
+    width: 100%;
+}
+
+.k-hero__content {
+    position: relative;
+    z-index: 2;
 }
 
 .k-hero__badge {
@@ -118,18 +133,117 @@
     }
 }
 
+/* ==================== MOBILE — фон + 100dvh ==================== */
 @media (max-width: 860px) {
     .k-hero {
-        padding: 130px 0 60px;
+        padding: 120px 0 60px;
     }
 
     .k-hero__inner {
         grid-template-columns: 1fr;
     }
 
+    /* Фото-фон — включается только на мобилке */
+    .k-hero__bg {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .k-hero__bg-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 0;
+        will-change: opacity, transform;
+        transition: opacity 1.4s ease-in-out;
+    }
+
+    /* Активный слайд — плавно появляется + медленный zoom-in */
+    .k-hero__bg-slide.is-active {
+        opacity: 1;
+        animation: k-kenburns 6s ease-out forwards;
+    }
+
+    /* Когда слайд уходит — сбрасываем анимацию,
+       чтобы при следующем появлении она проигралась заново */
+    .k-hero__bg-slide:not(.is-active) {
+        animation: none;
+        transform: scale(1.10);
+    }
+
+    /* «Эффект Кена Бёрнса»: картинка медленно наплывает */
+    @keyframes k-kenburns {
+        0% {
+            transform: scale(1.10);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* Затемнение поверх фото для читаемости текста */
+    .k-hero__bg-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+            linear-gradient(180deg,
+                rgba(30, 12, 5, 0.55) 0%,
+                rgba(30, 12, 5, 0.75) 45%,
+                rgba(30, 12, 5, 0.9) 100%),
+            radial-gradient(ellipse at 50% 50%,
+                rgba(30, 12, 5, 0.35) 0%,
+                rgba(30, 12, 5, 0.7) 100%);
+        pointer-events: none;
+    }
+
+    .k-hero__glow {
+        opacity: 0.5;
+    }
+
+    /* Арт с эмодзи скрываем — его заменяет фон */
     .k-hero__art {
-        height: 260px;
         display: none;
+    }
+
+    /* Текст на фоне — усиливаем контраст */
+    .k-hero__title {
+        text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .k-hero__desc {
+        color: rgba(245, 233, 220, 0.85);
+        text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .k-hero__badge {
+        background: rgba(30, 12, 5, 0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-color: rgba(245, 233, 220, 0.35);
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .k-hero__meta {
+        color: rgba(245, 233, 220, 0.75);
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Кнопки поверх фото */
+    .k-btn--ghost {
+        background: rgba(30, 12, 5, 0.4);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .k-btn--ghost:hover {
+        background: rgba(30, 12, 5, 0.6);
     }
 
     .k-hero__emoji {
@@ -139,5 +253,52 @@
     .k-hero__circle {
         width: 230px;
         height: 230px;
+    }
+}
+
+/* ==================== SMALL MOBILE ==================== */
+@media (max-width: 600px) {
+    .k-hero {
+        padding: 110px 0 50px;
+    }
+
+    .k-hero__title {
+        font-size: clamp(32px, 9vw, 44px);
+    }
+
+    .k-hero__desc {
+        font-size: 15px;
+        margin-top: 20px;
+    }
+
+    .k-hero__actions {
+        margin-top: 28px;
+    }
+
+    .k-hero__meta {
+        margin-top: 32px;
+        gap: 16px;
+        font-size: 12px;
+    }
+}
+
+/* ==================== LANDSCAPE (низкий экран) ==================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .k-hero {
+        min-height: auto;
+        padding: 100px 0 40px;
+    }
+}
+
+/* ==================== REDUCED MOTION ==================== */
+@media (prefers-reduced-motion: reduce) {
+    .k-hero__circle {
+        animation: none;
+    }
+
+    .k-hero__bg-slide {
+        transition: opacity 0.3s ease;
+        transform: none !important;
+        animation: none !important;
     }
 }

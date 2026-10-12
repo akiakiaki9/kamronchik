@@ -1,10 +1,15 @@
 /* ==================== ITEM MODAL ==================== */
 .k-modal--item {
     position: relative;
-    /* ← ВАЖНО: чтобы absolute-кнопка позиционировалась внутри */
     max-width: 560px;
+    max-height: 90vh;
+    /* ← ограничиваем высоту */
     padding: 0;
     overflow: hidden;
+    /* скрываем то, что вылезает */
+    display: flex;
+    /* ← flex-колонка */
+    flex-direction: column;
 }
 
 /* ==================== CLOSE BUTTON ==================== */
@@ -51,6 +56,8 @@
     aspect-ratio: 4 / 3;
     background: rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    flex-shrink: 0;
+    /* ← фото не сжимается */
 }
 
 .k-item__image img {
@@ -84,7 +91,14 @@
 
 /* ==================== BODY ==================== */
 .k-item__body {
-    padding: 26px 30px 30px;
+    display: flex;
+    /* ← flex-колонка */
+    flex-direction: column;
+    flex: 1;
+    /* занимает оставшееся место под фото */
+    min-height: 0;
+    /* ← важно для работы overflow внутри */
+    padding: 24px 30px 26px;
 }
 
 .k-item__name {
@@ -93,8 +107,63 @@
     font-weight: 500;
     letter-spacing: 0.04em;
     line-height: 1.2;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     color: var(--cream);
+    flex-shrink: 0;
+}
+
+/* ==================== SCROLL ==================== */
+.k-item__scroll {
+    flex: 1;
+    /* ← растягивается */
+    min-height: 0;
+    /* ← важно для скролла внутри */
+    overflow-y: auto;
+    /* ← вертикальный скролл */
+    padding-right: 8px;
+    /* отступ под скроллбар */
+    margin-bottom: 16px;
+
+    /* Плавный скролл */
+    scroll-behavior: smooth;
+
+    /* Красивый тонкий скроллбар */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(245, 233, 220, 0.25) transparent;
+
+    /* Мягкое затухание снизу */
+    mask-image: linear-gradient(180deg,
+            black 0%,
+            black calc(100% - 24px),
+            transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg,
+            black 0%,
+            black calc(100% - 24px),
+            transparent 100%);
+}
+
+/* Webkit-скроллбар */
+.k-item__scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.k-item__scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.k-item__scroll::-webkit-scrollbar-thumb {
+    background: rgba(245, 233, 220, 0.2);
+    border-radius: 40px;
+    transition: background 0.2s ease;
+}
+
+.k-item__scroll:hover::-webkit-scrollbar-thumb {
+    background: rgba(245, 233, 220, 0.35);
+}
+
+/* В Firefox тоже */
+.k-item__scroll {
+    scrollbar-gutter: stable;
 }
 
 .k-item__label {
@@ -109,16 +178,19 @@
 .k-item__desc {
     color: var(--muted);
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.65;
     letter-spacing: 0.02em;
-    margin-bottom: 20px;
+    margin: 0;
+    /* больше не нужен margin-bottom — он теперь у .k-item__scroll */
 }
 
+/* ==================== META ==================== */
 .k-item__meta {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
+    flex-shrink: 0;
 }
 
 .k-item__chip {
@@ -144,8 +216,9 @@
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    padding-top: 20px;
+    padding-top: 18px;
     border-top: 1px solid var(--line);
+    flex-shrink: 0;
 }
 
 .k-item__price {
@@ -222,21 +295,42 @@
     }
 
     .k-item__body {
-        padding: 22px 22px 24px;
+        padding: 20px 20px 22px;
     }
 
     .k-item__name {
         font-size: 22px;
+        margin-bottom: 12px;
     }
 
     .k-item__desc {
         font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .k-item__scroll {
+        margin-bottom: 14px;
+        padding-right: 6px;
+        /* На мобилке затухание снизу мягче */
+        mask-image: linear-gradient(180deg,
+                black 0%,
+                black calc(100% - 16px),
+                transparent 100%);
+        -webkit-mask-image: linear-gradient(180deg,
+                black 0%,
+                black calc(100% - 16px),
+                transparent 100%);
+    }
+
+    .k-item__meta {
+        margin-bottom: 14px;
     }
 
     .k-item__foot {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
+        padding-top: 16px;
     }
 
     .k-item__price {
@@ -257,11 +351,33 @@
     }
 }
 
+/* Если экран очень низкий (телефон в landscape) */
+@media (max-height: 500px) {
+    .k-modal--item {
+        max-height: 95vh;
+    }
+
+    .k-item__image {
+        aspect-ratio: 16 / 9;
+        /* фото становится ниже */
+    }
+
+    .k-item__body {
+        padding: 16px 20px 18px;
+    }
+
+    .k-item__name {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+}
+
 /* Уважаем настройки пользователя */
 @media (prefers-reduced-motion: reduce) {
 
     .k-item__add,
-    .k-item__close {
+    .k-item__close,
+    .k-item__scroll {
         transition: none;
     }
 }

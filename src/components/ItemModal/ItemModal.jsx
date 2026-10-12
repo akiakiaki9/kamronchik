@@ -29,7 +29,7 @@ export default function ItemModal({ item, formatPrice, onAdd, onClose }) {
                 aria-modal="true"
                 aria-label={item.name}
             >
-                {/* Кнопка закрытия — поверх всего, position: absolute */}
+                {/* Кнопка закрытия */}
                 <button
                     type="button"
                     className="k-modal__close k-item__close"
@@ -44,6 +44,7 @@ export default function ItemModal({ item, formatPrice, onAdd, onClose }) {
                     <img
                         src={item.image || PLACEHOLDER}
                         alt={item.name}
+                        loading="eager"
                         onError={(e) => {
                             e.currentTarget.src = PLACEHOLDER;
                         }}
@@ -53,12 +54,15 @@ export default function ItemModal({ item, formatPrice, onAdd, onClose }) {
                 <div className="k-item__body">
                     <h3 className="k-item__name">{item.name}</h3>
 
-                    {item.ingredients && (
-                        <>
-                            <span className="k-item__label">Состав</span>
-                            <p className="k-item__desc">{item.ingredients}</p>
-                        </>
-                    )}
+                    {/* Скроллируемая часть */}
+                    <div className="k-item__scroll">
+                        {item.ingredients && (
+                            <>
+                                <span className="k-item__label">Состав</span>
+                                <p className="k-item__desc">{item.ingredients}</p>
+                            </>
+                        )}
+                    </div>
 
                     <div className="k-item__meta">
                         {item.weight && (

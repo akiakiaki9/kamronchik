@@ -16,6 +16,18 @@ const LNG = 64.431332;
 const YANDEX_MAP_EMBED = `https://yandex.uz/map-widget/v1/?ll=${LNG}%2C${LAT}&z=17&pt=${LNG},${LAT},pm2rdm`;
 const YANDEX_MAP_LINK = 'https://yandex.uz/maps/-/CXqcF21S';
 
+// 📸 Вертикальные фото кафе / десертов
+const GALLERY = [
+    {
+        src: '/images/interior-1.jpg',
+        alt: 'Клубника в шоколаде — Kamronchik',
+    },
+    {
+        src: '/images/interior-2.jpg',
+        alt: 'Десерты и напитки — Kamronchik',
+    },
+];
+
 export default function Contacts() {
     const [reviewOpen, setReviewOpen] = useState(false);
 
@@ -26,12 +38,11 @@ export default function Contacts() {
                 setReviewOpen(true);
             }
         };
-        checkHash(); // при загрузке
+        checkHash();
         window.addEventListener('hashchange', checkHash);
         return () => window.removeEventListener('hashchange', checkHash);
     }, []);
 
-    // 🧹 Убираем hash из URL при закрытии, чтобы повторное открытие работало
     const closeReview = () => {
         setReviewOpen(false);
         if (window.location.hash === '#review') {
@@ -39,9 +50,7 @@ export default function Contacts() {
         }
     };
 
-    const openReview = () => {
-        setReviewOpen(true);
-    };
+    const openReview = () => setReviewOpen(true);
 
     return (
         <section id="contacts" className="k-contacts">
@@ -107,14 +116,13 @@ export default function Contacts() {
                             </ul>
                         </div>
 
-                        {/* ⭐ Кнопка отзыва */}
                         <button className="k-review-btn" onClick={openReview}>
                             <FiStar />
                             <span>Оставить отзыв</span>
                         </button>
                     </div>
 
-                    {/* Правая колонка: карта */}
+                    {/* Правая колонка: адрес + карта + галерея */}
                     <div className="k-contacts__map-wrap">
                         <div className="k-contacts__address">
                             <div className="k-contacts__address-icon"><FiMapPin /></div>
@@ -135,6 +143,23 @@ export default function Contacts() {
                                 allowFullScreen
                                 referrerPolicy="no-referrer-when-downgrade"
                             />
+                        </div>
+
+                        {/* 📸 Галерея из 2 фото */}
+                        <div className="k-contacts__gallery">
+                            {GALLERY.map((img) => (
+                                <figure key={img.src} className="k-contacts__photo">
+                                    <img
+                                        src={img.src}
+                                        alt={img.alt}
+                                        loading="lazy"
+                                        decoding="async"
+                                        onError={(e) => {
+                                            e.currentTarget.style.display = 'none';
+                                        }}
+                                    />
+                                </figure>
+                            ))}
                         </div>
                     </div>
                 </div>
