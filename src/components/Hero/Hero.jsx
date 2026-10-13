@@ -55,7 +55,7 @@ export default function Hero() {
                         Доставка по всей Бухаре с 9:30 до 00:00.
                     </p>
                     <div className="k-hero__actions">
-                        <a href="#menu" className="k-btn k-btn--primary">
+                        <a href="menu" className="k-btn k-btn--primary">
                             Смотреть меню <FiArrowRight />
                         </a>
                         <a
