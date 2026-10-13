@@ -6,7 +6,7 @@ const SITE_URL = 'https://www.kamronchik.uz';
 
 // ==================== ОТПРАВКА ====================
 async function sendMessage(chatId, text, replyMarkup) {
-    await fetch(`${API}/sendMessage`, {
+    const res = await fetch(`${API}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -18,10 +18,13 @@ async function sendMessage(chatId, text, replyMarkup) {
         }),
         cache: 'no-store',
     });
+    const data = await res.json();
+    console.log('[TG] sendMessage →', JSON.stringify(data));
+    return data;
 }
 
 async function editMessage(chatId, messageId, text, replyMarkup) {
-    await fetch(`${API}/editMessageText`, {
+    const res = await fetch(`${API}/editMessageText`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -34,6 +37,9 @@ async function editMessage(chatId, messageId, text, replyMarkup) {
         }),
         cache: 'no-store',
     });
+    const data = await res.json();
+    console.log('[TG] editMessage →', JSON.stringify(data));
+    return data;
 }
 
 async function answerCallback(callbackId) {
@@ -149,14 +155,17 @@ const KB = {
     },
 };
 
-// ==================== WEBHOOK ====================
+// ==================== WEBHOOK: POST ====================
 export async function POST(req) {
     let update;
     try {
         update = await req.json();
     } catch {
+        console.log('[TG] Bad JSON in webhook');
         return NextResponse.json({ ok: true });
     }
+
+    console.log('[TG] === UPDATE ===', JSON.stringify(update));
 
     try {
         // --- СООБЩЕНИЯ ---
@@ -165,11 +174,13 @@ export async function POST(req) {
             const text = (update.message.text || '').trim();
             const firstName = update.message.from?.first_name || 'друг';
 
+            console.log('[TG] Message from', chatId, ':', text);
+
             if (text.startsWith('/start')) {
                 await sendMessage(
                     chatId,
                     `<b>${firstName}</b>, добро пожаловать! 🍓\n\n` +
-                    TEXTS.welcome.split('\n\n').slice(1).join('\n\n'),
+                        TEXTS.welcome.split('\n\n').slice(1).join('\n\n'),
                     KB.main
                 );
             } else if (text.startsWith('/menu')) {
@@ -192,6 +203,7 @@ export async function POST(req) {
             const messageId = cb.message.message_id;
             const data = cb.data;
 
+            console.log('[TG] Callback:', data, 'from', chatId);
             await answerCallback(cb.id);
 
             if (data === 'menu') {
@@ -211,11 +223,50 @@ export async function POST(req) {
 
         return NextResponse.json({ ok: true });
     } catch (e) {
-        console.error('Telegram webhook error:', e);
+        console.error('[TG] Error:', e.message);
         return NextResponse.json({ ok: true });
     }
 }
 
+// ==================== WEBHOOK: GET (диагностика) ====================
 export async function GET() {
-    return NextResponse.json({ ok: true, message: 'Webhook is alive' });
+    if (!TOKEN) {
+        return NextResponse.json(
+            {
+                ok: false,
+                error: 'TELEGRAM_BOT_TOKEN не задан в env',
+                env: process.env.VERCEL_ENV || 'local',
+            },
+            { status: 500 }
+        );
+    }
+
+    // Проверим, что токен рабочий — запросим инфо о боте
+    try {
+        const r = await fetch(`https://api.telegram.org/bot${TOKEN}/getMe`, {
+            cache: 'no-store',
+        });
+        const data = await r.json();
+
+        return NextResponse.json({
+            ok: true,
+            message: 'Webhook is alive',
+            hasToken: true,
+            tokenPrefix: TOKEN.slice(0, 10) + '...',
+            botOk: data.ok,
+            botUsername: data.result?.username || null,
+            botName: data.result?.first_name || null,
+            botError: data.ok ? null : data.description,
+            env: process.env.VERCEL_ENV || 'local',
+        });
+    } catch (e) {
+        return NextResponse.json(
+            {
+                ok: false,
+                hasToken: true,
+                fetchError: e.message,
+            },
+            { status: 500 }
+        );
+    }
 }
